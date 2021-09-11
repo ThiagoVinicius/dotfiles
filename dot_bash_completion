@@ -1,1 +1,1 @@
-eval "$(chezmoi completion bash)"
+hash chezmoi 2> /dev/null && eval "$(chezmoi completion bash)"
