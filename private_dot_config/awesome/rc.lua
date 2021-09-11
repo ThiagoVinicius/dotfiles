@@ -192,7 +192,7 @@ mytags = {
   },
   {
     name = "www",
-    layout = awful.layout.suit.float,
+    layout = awful.layout.suit.floating,
   },
   {}, {}, {}, {}, {},
   {
@@ -208,10 +208,10 @@ awful.screen.connect_for_each_screen(function(s)
     -- awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
     for index, tag in ipairs(mytags) do
       awful.tag.add(tag.name or tostring(index),
-      		     { index=index,
-                       screen=s,
-                       selected=index == mydefaulttagindex,
-                       layout=tag.layout or mydefaultlayout,
+                     { index = index,
+                       screen = s,
+                       selected = index == mydefaulttagindex,
+                       layout = tag.layout or mydefaultlayout,
 	             })
     end
 
@@ -607,5 +607,6 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
-awful.spawn({"picom", "-b"})
-awful.spawn({"nm-applet"})
+awful.spawn.single_instance({"picom", "-b"})
+awful.spawn.single_instance({"nm-applet"})
+awful.spawn.single_instance({"env", "LIBGL_ALWAYS_SOFTWARE=1", "kitty", "top"}, { tag = "sys" })
