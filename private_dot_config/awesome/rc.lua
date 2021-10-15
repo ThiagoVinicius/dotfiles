@@ -54,7 +54,8 @@ beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 -- This is used later as the default terminal and editor to run.
 -- terminal = "env LIBGL_ALWAYS_SOFTWARE=1 x-terminal-emulator"
 -- terminal = "kitty"
-terminal = "env LIBGL_ALWAYS_SOFTWARE=1 kitty"
+-- terminal = "env LIBGL_ALWAYS_SOFTWARE=1 kitty"
+terminal = "terminator"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -194,7 +195,18 @@ mytags = {
     name = "www",
     layout = awful.layout.suit.floating,
   },
-  {}, {}, {}, {}, {},
+  {
+    name = "js",
+  },
+  {
+    name = "comms",
+  },
+  {
+    name = "java",
+  },
+  {
+    name = "sql",
+  }, {},
   {
     name = "sys"
   }, {},
@@ -539,7 +551,26 @@ awful.rules.rules = {
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     { rule = { class = "Firefox" },
-      properties = { screen = 1, tag = "www" } },
+      properties = { screen = 1, tag = "www", titlebars_enabled = false } },
+
+    -- Janelas do STS.
+    { rule = { class = "SpringToolSuite4" },
+      properties = { screen = 1, tag = "java", floating = true, titlebars_enabled = false, } },
+
+    -- Splash screen do STS.
+    { rule = { instance = "java", class = "Java", name = "Spring.*Tool.*" },
+      properties = { screen = 1, tag = "java", } },
+
+    -- Janela principal do STS (ainda não tá funcionando).
+    { rule = { class = "SpringToolSuite4", type = "normal", modal = false, },
+      properties = { maximized = true } },
+
+    { rule = { class = "Microsoft Teams.*" },
+      properties = { screen = 1, tag = "comms", titlebars_enabled = false, } },
+
+    { rule = { class = "Terminator" },
+      properties = { titlebars_enabled = false, } },
+
 }
 -- }}}
 
@@ -609,4 +640,5 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 awful.spawn.single_instance({"picom", "-b"})
 awful.spawn.single_instance({"nm-applet"})
-awful.spawn.single_instance({"env", "LIBGL_ALWAYS_SOFTWARE=1", "kitty", "top"}, { tag = "sys" })
+awful.spawn.single_instance({terminal, "-x", "top"}, { tag = "sys" })
+awful.spawn.single_instance({"/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1"})

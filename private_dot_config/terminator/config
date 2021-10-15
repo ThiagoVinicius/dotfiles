@@ -1,0 +1,21 @@
+[global_config]
+  focus = mouse
+  tab_position = bottom
+[keybindings]
+[profiles]
+  [[default]]
+    background_color = "#002b36"
+    cursor_color = "#aaaaaa"
+    foreground_color = "#839496"
+    show_titlebar = False
+    scrollbar_position = hidden
+    scrollback_infinite = True
+[layouts]
+  [[default]]
+    [[[window0]]]
+      type = Window
+      parent = ""
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+[plugins]
